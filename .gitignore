@@ -1,0 +1,11 @@
+# Personal data — each user creates their own via the onboarding workflow
+data/
+
+# Generated output
+output/
+
+# OS files
+.DS_Store
+
+# Editor-specific
+.cursor/
