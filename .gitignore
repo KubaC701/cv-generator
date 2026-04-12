@@ -9,3 +9,7 @@ output/
 
 # Editor-specific
 .cursor/
+
+.playwright-mcp
+
+node_modules/

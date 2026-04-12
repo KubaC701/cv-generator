@@ -1,0 +1,14 @@
+{
+  "name": "cv-generator",
+  "version": "1.0.0",
+  "description": "An agent-driven CV generator powered by Claude Code. It guides you through every step — from raw career data to a polished, job-tailored HTML/PDF resume.",
+  "scripts": {
+    "pdf": "node scripts/generate-pdf.mjs",
+    "validate": "node scripts/generate-pdf.mjs --validate"
+  },
+  "author": "Jakub Ciepły",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^24.40.0"
+  }
+}

@@ -18,6 +18,10 @@ data-example/                   # Reference examples showing the expected file f
     acme-corp.md
 output/                         # Generated CVs (gitignored)
   cv-<target>-<date>.html
+  cv-<target>-<date>.pdf
+scripts/
+  generate-pdf.mjs              # Puppeteer-based validation & PDF generation
+package.json                    # npm scripts: pdf, validate
 style-guide.md                  # Structural + visual rules for CV generation
 CLAUDE.md                       # This file — agent workflow guide
 ```
@@ -26,13 +30,38 @@ New users: look at `data-example/` to see the expected file format, then run the
 
 ## Workflow Overview
 
-There are two main workflows: **onboarding** (new user, no data yet) and **generation** (data exists, user wants a CV for a specific job).
+There are two main workflows:
+- **Onboarding** (new user, no data yet) — always asks if the user has a target job first; if yes, the entire onboarding is steered by that job (preferred path); if not, falls back to generic profile creation
+- **Generation** (data exists, user wants a CV for a specific job)
 
 ---
 
 ## Workflow 1: Onboarding a New User
 
 When `data/` is empty or missing files, the agent walks the user through creating their profile. This is interactive and conversational — do not dump a form.
+
+### Step 0 — Analyze Target Job (preferred path)
+
+Analyzing a target job before onboarding produces better data with less effort. **Always start here.**
+
+**When to trigger:** Always — this is the default first step. If the user provides a job description upfront, use it. If they don't, ask:
+
+> "Before we start building your profile — do you already have a specific job offer or description you're targeting? If so, share it and I'll tailor my questions to what matters most for that role. If not, no problem — we'll do a general setup."
+
+If the user has no job in mind, acknowledge it and proceed with generic onboarding (Step 1). Don't push — it's a quick yes/no.
+
+**What to do:**
+1. Read the job description and extract the same analysis as Workflow 2, Step 1:
+   - Target title, required/preferred skills, key responsibilities, company context, keywords
+2. Save this analysis internally (do not create an output file yet — there's no data to generate from).
+3. Tell the user you've analyzed the job and briefly summarize what the role emphasizes (e.g., "This role focuses heavily on distributed systems and Go — I'll make sure to dig into those areas when we talk about your experience.").
+
+**How this shapes subsequent steps:**
+- **Personal Info** — no change (always the same questions).
+- **Experience** — this is where the biggest impact is. See Step 2 below for details.
+- **Education** — if the job requires specific credentials or coursework, ask about those specifically.
+
+**Important:** The goal is to focus the conversation, not to limit the data. Still capture the user's full career — but spend more interview time on the roles, skills, and achievements that match the target job. The data files should be comprehensive enough to reuse for other jobs later.
 
 ### Step 1 — Personal Info
 
@@ -61,6 +90,12 @@ This is the most important and time-intensive step. For each role, create a file
 2. For each role, conduct a brief interview — ask about responsibilities, achievements, technologies, team size, and impact.
 3. Push for specifics and numbers: "You mentioned improving performance — do you have metrics? Lighthouse scores, load times, conversion rates?"
 4. Write the file only when you have enough detail to generate strong CV bullets later.
+
+**If a target job was analyzed in Step 0**, adapt the interview:
+- **Prioritize relevant roles.** If the user lists 5 past positions and 2 clearly align with the target job, interview those first and in more depth. Still cover the others, but don't spend 10 questions on an unrelated internship.
+- **Ask job-specific follow-ups.** If the job requires "experience leading cross-functional teams," ask about leadership and collaboration for each relevant role. If it wants "CI/CD pipeline experience," probe for that specifically.
+- **Surface hidden matches.** The user might not realize their work is relevant. If the job wants "event-driven architecture" and the user mentions Kafka in passing, dig in: "You mentioned Kafka — can you tell me more about that system? What scale was it running at?"
+- **Don't over-filter.** Capture all roles and achievements — the data files are the user's career base, not a single-job snapshot. But allocate interview effort proportionally to relevance.
 
 **File format:**
 
@@ -115,6 +150,8 @@ If the user wants to share their professional values or working style, create `d
 
 Once the data files exist, confirm with the user and explain they can now generate CVs by providing a job description.
 
+**If a target job was analyzed in Step 0:** Transition directly into Workflow 2 (Generation) — don't make the user paste the job description again. You already have the analysis. Say something like: "Your profile is set up. Since you already shared the [Company/Role] job description, want me to generate the CV now?"
+
 ---
 
 ## Workflow 2: Generating a CV
@@ -130,15 +167,13 @@ Read the job description and extract:
 - Company context and industry
 - Any specific keywords that should appear on the CV
 
-### Step 2 — Select a theme
+### Step 2 — Design direction
 
-If the user hasn't stated a visual preference, ask briefly:
+Have a brief conversation about visual style. Don't offer a menu of presets — ask open-ended questions:
 
-> "Any preference for the visual style? Modern and colorful, classic and professional, or minimal and clean?"
+> "What kind of vibe should the CV have? Think about the role and company — is it a creative studio, a corporate bank, a startup? Any colors, fonts, or styles you're drawn to? Want a photo included?"
 
-If they don't care, default to **Minimal Slate** — it's safe for any industry.
-
-See `style-guide.md` → Theme System for available themes and how to create custom ones.
+Use their answers (and the industry context from Step 1) to craft a unique design. See `style-guide.md` for layout archetypes, typography guidance, and design principles — but don't default to a template. Each CV should feel intentionally designed for this person and role.
 
 ### Step 3 — Read user data
 
@@ -159,34 +194,48 @@ Based on the job analysis and user data:
 
 ### Step 5 — Generate HTML
 
-Produce a single `.html` file following `style-guide.md` exactly:
-- All CSS in a single `<style>` block using the chosen theme's variables
-- Semantic HTML with the documented class names
-- Inline SVG icons (no external dependencies)
-- Google Fonts import for the theme's font
+Produce a single self-contained `.html` file. Follow all hard constraints and design principles from `style-guide.md`. Key reminders:
+- **Single A4 page by default** — content must fit the `.cv` container. Err on fewer bullets; the validation step will confirm fit.
+- **Unique design** — don't reuse the same layout, font, or color scheme across different CVs. Each design should reflect the user's industry, personality, and the role they're targeting.
 
 Save to: `output/cv-<target>-<YYYY-MM-DD>.html`
 
 Where `<target>` is a short slug derived from the company or role (e.g., `google`, `senior-fe`, `healthcare-ai`).
 
-### Step 6 — Review loop
+### Step 6 — Validate page fit
 
-Tell the user the file is ready and suggest they open it in a browser. Apply any requested changes to the same file. Common requests:
+After generating the HTML, **always** run the validation script:
+
+```bash
+npm run validate output/cv-<target>-<date>.html
+```
+
+Follow the **Generate → Validate → Adjust** loop described in `style-guide.md` → Page Fit. Target: 3–15mm of remaining vertical space. The script exits with code 1 on overflow — content must fit before proceeding.
+
+### Step 7 — Review loop
+
+Tell the user the file is ready and suggest they open it in a browser. Apply any requested changes to the same file, then re-validate after each change. Common requests:
 - Adjust bullet emphasis or wording
 - Add/remove a role or project
-- Change the theme or colors
-- Fix page break issues
+- Change the style or colors
+- Fix spacing or page fit issues
 
-When the user is satisfied, they export to PDF via browser print (Cmd/Ctrl+P → Save as PDF, with background graphics enabled).
+When the user is satisfied, generate the final PDF:
+
+```bash
+npm run pdf output/cv-<target>-<date>.html
+```
+
+This runs validation and (if content fits) produces a print-ready PDF alongside the HTML file.
 
 ---
 
 ## Rules for the Agent
 
 1. **Never fabricate data.** Every claim on the CV must come from the user's data files. If data is insufficient, ask the user — don't invent metrics or responsibilities.
-2. **Tailor aggressively.** A good CV is not a dump of everything. Cut ruthlessly to fit 1-2 pages. The job description decides what stays.
-3. **Respect the style guide.** Follow `style-guide.md` for all structural and visual decisions. Don't improvise layout or spacing.
-4. **One file = one output.** The HTML file is self-contained. No external CSS, no JS, no images. Just HTML + inline CSS + inline SVGs + one Google Fonts link.
+2. **Tailor aggressively.** A good CV is not a dump of everything. Cut ruthlessly to fit a single A4 page (default). The job description decides what stays. Two pages only when explicitly requested or clearly justified for 10+ year careers — and even then, content must be deliberately allocated across pages (see style-guide.md → Two-Page CVs).
+3. **Respect the style guide.** Follow `style-guide.md` for hard constraints and design principles. Improvise layout, typography, and color within those guardrails — each CV should be a unique design.
+4. **One file = one output.** The HTML file is self-contained. No external CSS, no JS, no external images. Just HTML + inline CSS + inline SVGs + one Google Fonts link. Photos are embedded as base64 data URIs.
 5. **Ask, don't assume.** When data is ambiguous or missing, ask the user. When visual preferences are unclear, offer choices.
 6. **Keep data files updated.** If the user shares new information during generation (e.g., "actually I got promoted to senior"), update the relevant data file too — not just the CV output.
 
@@ -197,8 +246,9 @@ When the user is satisfied, they export to PDF via browser print (Cmd/Ctrl+P →
 | User says                        | Agent does                                           |
 |----------------------------------|------------------------------------------------------|
 | "Generate a CV for [job link/description]" | Run Workflow 2                              |
-| "Help me set up my data"         | Run Workflow 1                                       |
+| "Help me set up my data"         | Run Workflow 1 (ask about target job first)           |
+| "I want to apply to [job] — help me get started" | Run Workflow 1 with Step 0 → then Workflow 2 |
 | "Add my experience at [company]" | Interview about that role → create experience file   |
-| "Change the theme to something warmer" | Update theme variables in the generated HTML    |
+| "Change the style to something warmer" | Redesign with warmer colors/fonts in the generated HTML |
 | "Make it fit one page"           | Reduce bullets, tighten content, regenerate          |
 | "Update my data — I got a new role" | Update relevant data file                         |
