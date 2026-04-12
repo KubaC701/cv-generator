@@ -22,7 +22,8 @@ output/                         # Generated CVs (gitignored)
 scripts/
   generate-pdf.mjs              # Puppeteer-based validation & PDF generation
 package.json                    # npm scripts: pdf, validate
-style-guide.md                  # Structural + visual rules for CV generation
+style-guide.md                  # Visual & technical rules (layout, typography, colors, print)
+content-guide.md                # Content rules (bullets, tailoring, quantification, anti-patterns)
 CLAUDE.md                       # This file — agent workflow guide
 ```
 
@@ -87,9 +88,10 @@ This is the most important and time-intensive step. For each role, create a file
 
 **How to gather data:**
 1. Ask the user for their work history (company names, roles, dates).
-2. For each role, conduct a brief interview — ask about responsibilities, achievements, technologies, team size, and impact.
-3. Push for specifics and numbers: "You mentioned improving performance — do you have metrics? Lighthouse scores, load times, conversion rates?"
-4. Write the file only when you have enough detail to generate strong CV bullets later.
+2. For each role, conduct a brief interview — ask about achievements, technologies, team size, and impact. Focus on *what changed* because of the user's work, not what their job description said.
+3. Push for specifics and numbers: "You mentioned improving performance — do you have metrics? Lighthouse scores, load times, dollar amounts, team size?" See `content-guide.md` → **Quantifying Impact** for the full list of metric proxies (scale, time, comparison, scope) when hard numbers aren't available.
+4. Apply the **"so what?" test** from `content-guide.md` to each achievement the user describes. If their answer sounds like a duty ("I managed deployments"), dig for the result ("What improved because of how you managed them?").
+5. Write the file only when you have enough detail to generate strong CV bullets later — meaning each key achievement has a clear action, context, and impact.
 
 **If a target job was analyzed in Step 0**, adapt the interview:
 - **Prioritize relevant roles.** If the user lists 5 past positions and 2 clearly align with the target job, interview those first and in more depth. Still cover the others, but don't spend 10 questions on an unrelated internship.
@@ -185,11 +187,11 @@ Read all files in `data/`:
 
 ### Step 4 — Curate content
 
-Based on the job analysis and user data:
+Follow `content-guide.md` for all content decisions. Based on the job analysis and user data:
 1. Pick the most relevant achievements for each role
-2. Rewrite bullets to emphasize skills from the job description
-3. Order skills to match the job's priorities
-4. Draft a tailored 2-3 sentence summary
+2. Rewrite bullets using the **Action → What → Impact** formula; apply the "so what?" test to each
+3. Order skills to match the job's priorities (front-load keywords from the job description)
+4. Draft a tailored 2–3 sentence summary
 5. Decide section order (experience-first vs. projects-first)
 
 ### Step 5 — Generate HTML
@@ -234,7 +236,7 @@ This runs validation and (if content fits) produces a print-ready PDF alongside 
 
 1. **Never fabricate data.** Every claim on the CV must come from the user's data files. If data is insufficient, ask the user — don't invent metrics or responsibilities.
 2. **Tailor aggressively.** A good CV is not a dump of everything. Cut ruthlessly to fit a single A4 page (default). The job description decides what stays. Two pages only when explicitly requested or clearly justified for 10+ year careers — and even then, content must be deliberately allocated across pages (see style-guide.md → Two-Page CVs).
-3. **Respect the style guide.** Follow `style-guide.md` for hard constraints and design principles. Improvise layout, typography, and color within those guardrails — each CV should be a unique design.
+3. **Respect the guides.** Follow `style-guide.md` for visual/technical constraints and `content-guide.md` for content quality. Improvise layout, typography, and color within those guardrails — each CV should be a unique design.
 4. **One file = one output.** The HTML file is self-contained. No external CSS, no JS, no external images. Just HTML + inline CSS + inline SVGs + one Google Fonts link. Photos are embedded as base64 data URIs.
 5. **Ask, don't assume.** When data is ambiguous or missing, ask the user. When visual preferences are unclear, offer choices.
 6. **Keep data files updated.** If the user shares new information during generation (e.g., "actually I got promoted to senior"), update the relevant data file too — not just the CV output.

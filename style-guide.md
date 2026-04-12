@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This guide defines the **principles and constraints** for generating professional CV/resume HTML files. It is not a template — the agent uses these rules as guardrails while crafting a unique design for each user. Every CV should feel intentionally designed for the person and the role, not stamped from a mold.
+This guide defines the **visual and technical constraints** for generating professional CV/resume HTML files. It covers layout, typography, colors, icons, spacing, and print rules. It is not a template — the agent uses these rules as guardrails while crafting a unique design for each user.
 
-Visual decisions (layout, colors, typography, mood) are made collaboratively with the user. This guide ensures those decisions produce output that is technically sound, print-safe, and professionally effective.
+For **content rules** — bullet writing, tailoring, quantification, section ordering — see `content-guide.md`.
 
 ---
 
@@ -277,40 +277,6 @@ Additional variables for tags, borders, heading colors, etc. are design-specific
 
 ---
 
-## Content Rules
-
-### Bullet Writing
-
-- 3–6 bullets per role. Fewer for older/shorter roles. Most recent role gets the most.
-- Start with a strong verb: Led, Built, Designed, Migrated, Reduced, Shipped, Automated.
-- Include quantifiable outcomes when available (%, time saved, revenue, scale).
-- Max ~120 characters per bullet. If it takes 3 lines, split or rewrite.
-- Active voice only. Never "Was responsible for..." — say what you did.
-
-### Summary
-
-- 2–3 sentences, max ~50 words
-- Mentions: years of experience, core domain, 1–2 differentiators
-- Tailored to the target job — mirror their language and priorities
-
-### Skills
-
-- Grouped by category (Languages, Frameworks, Tools, etc.)
-- Ordered by relevance to the target job
-- Curated — omit skills irrelevant to the role
-- Displayed as compact tags or inline lists
-
-### Section Order
-
-Decide based on what's strongest for this candidate and role:
-- **Experience-first** (default): Name → Title → Summary → Experience → Skills → Education
-- **Skills-first**: When the role is highly technical and skills are the primary filter
-- **Projects-first**: When side projects or portfolio pieces are more impressive than employment history
-
-Contact info placement depends on the layout — sidebar, header row, or footer.
-
----
-
 ## Typography: Non-Breaking Spaces
 
 Proper use of non-breaking spaces (`&nbsp;` in HTML) prevents ugly line breaks in professional documents. Apply these rules consistently:
@@ -352,13 +318,10 @@ Apply non-breaking spaces in the final HTML output, not in the user's data files
 
 ### Content
 
-- Listing every technology ever touched — curate for the role
-- Passive voice bullet points — show impact, not duties
-- Job descriptions instead of achievements
-- Walls of text — if a bullet needs 3+ lines, split or rewrite
-- "References available upon request" (implicit, wastes a line)
-- Generic objective statements — use a tailored summary instead
-- Hobbies/interests (unless directly relevant to the role)
+See `content-guide.md` → **Content Anti-Patterns** for the full list. Key ones:
+- Job duties instead of achievements
+- Missing result/impact clauses
+- Untailored, one-size-fits-all content
 
 ---
 
