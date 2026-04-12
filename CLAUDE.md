@@ -11,11 +11,20 @@ data/                           # User's personal data (gitignored — each user
   values.md                     # (optional) Personal/professional values
   experience/
     <company-slug>.md           # One file per employer/role
+  extras/                       # Anything beyond experience & education (see below)
+    <item-slug>.md              # Each file self-describes its type
+  <custom-folder>/              # Users can create their own folders if they have many items
+    <item-slug>.md              #   e.g., projects/, certifications/, speaking/
 data-example/                   # Reference examples showing the expected file format
   personal_info.md
   education.md
   experience/
     acme-corp.md
+  extras/
+    side-project.md             # Type: Project
+    tech-meetup.md              # Type: Speaking
+    aws-cert.md                 # Type: Certification
+    volunteer-mentoring.md      # Type: Volunteer
 output/                         # Generated CVs (gitignored)
   cv-<target>-<date>.html
   cv-<target>-<date>.pdf
@@ -144,9 +153,53 @@ Create `data/education.md`. Keep it brief — education matters less with experi
 Details if notable (honors, thesis, relevant coursework).
 ```
 
-### Step 4 — Values (optional)
+### Step 4 — Extras (optional but encouraged)
 
-If the user wants to share their professional values or working style, create `data/values.md`. This helps the agent tailor the summary and tone of the CV. Don't push for this unless the user brings it up.
+This is where everything beyond work experience and education lives. The `extras/` folder (or custom folders — whatever the user prefers) can hold anything that strengthens a CV. **Actively encourage users to share more** — people often undervalue things that can make a real difference on a CV.
+
+**Examples of what belongs here:**
+- **Projects** — hackathons, side projects, open source contributions, university projects
+- **Speaking** — conference talks, meetup presentations, podcast appearances
+- **Certifications** — AWS, Google Cloud, Scrum Master, language proficiency certificates
+- **Volunteering** — mentoring, community organizing, NGO work, coaching
+- **Publications** — blog posts, research papers, technical articles
+- **Awards & competitions** — hackathon prizes, academic honors, industry recognition
+- **Teaching** — workshops led, courses created, university tutoring
+
+**How to gather:** After covering experience, ask an open question:
+
+> "Beyond your jobs, is there anything else that shows who you are professionally? Side projects, talks, certifications, volunteering, competitions, publications — anything you're proud of or that's relevant to the roles you target?"
+
+If a target job was analyzed in Step 0, prompt for specifics: "The role mentions [X] — do you have any projects, certifications, or other work that demonstrates that?"
+
+**File organization:**
+- Few items (1-3) → put them in `data/extras/`
+- Many items in one category (3+) → give it its own folder (e.g., `data/projects/`, `data/certifications/`)
+- The agent reads everything in `data/` recursively, so folder names don't matter — file content does
+
+**File format:** Each file self-describes its type. The structure adapts to the content:
+
+```markdown
+# Item Name
+
+**Type:** Project | Speaking | Certification | Volunteer | Publication | Award | Teaching
+**Date:** Month Year (or "Active" / "Expires Month Year" for certifications)
+
+## Overview
+
+What it is, why it matters.
+
+## Key Details
+
+- Relevant highlights, outcomes, or skills demonstrated.
+- Adapt these sections to what makes sense for the type.
+```
+
+See `data-example/extras/` for concrete examples of different types.
+
+### Step 5 — Values (optional)
+
+If the user wants to share their professional values or working style, create `data/values.md`. This helps the agent tailor the summary and tone of the CV. Don't push for this — it's only if the user brings it up.
 
 ### Onboarding complete
 
@@ -179,11 +232,12 @@ Use their answers (and the industry context from Step 1) to craft a unique desig
 
 ### Step 3 — Read user data
 
-Read all files in `data/`:
+Read all `.md` files in `data/` recursively. The required files are:
 - `personal_info.md`
 - `education.md`
-- `values.md` (if it exists)
-- All files in `data/experience/`
+- All files in `experience/`
+
+Everything else is optional — `values.md`, `extras/`, and any user-created folders (e.g., `projects/`, `certifications/`). Read whatever exists.
 
 ### Step 4 — Curate content
 
@@ -193,6 +247,7 @@ Follow `content-guide.md` for all content decisions. Based on the job analysis a
 3. Order skills to match the job's priorities (front-load keywords from the job description)
 4. Draft a tailored 2–3 sentence summary
 5. Decide section order (experience-first vs. projects-first)
+6. **Extras** — include projects, certifications, speaking, volunteering, publications, or any other data from the user's extras when they strengthen the application. Projects are especially valuable for emerging tech (AI, ML) or when job titles undersell capabilities. Certifications signal validated expertise. Speaking signals thought leadership. Volunteering signals leadership and values. Pick what's relevant to the target role — don't include everything.
 
 ### Step 5 — Generate HTML
 
@@ -253,4 +308,8 @@ This runs validation and (if content fits) produces a print-ready PDF alongside 
 | "Add my experience at [company]" | Interview about that role → create experience file   |
 | "Change the style to something warmer" | Redesign with warmer colors/fonts in the generated HTML |
 | "Make it fit one page"           | Reduce bullets, tighten content, regenerate          |
+| "Add my hackathon project"           | Interview about the project → create extras file  |
+| "I gave a talk at [event]"           | Create extras file (Type: Speaking)               |
+| "I have an AWS certification"        | Create extras file (Type: Certification)          |
+| "I volunteer at [org]"              | Create extras file (Type: Volunteer)              |
 | "Update my data — I got a new role" | Update relevant data file                         |
