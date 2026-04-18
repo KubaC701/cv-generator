@@ -104,7 +104,7 @@ This is the most important and time-intensive step. For each role, create a file
 
 **If a target job was analyzed in Step 0**, adapt the interview:
 - **Prioritize relevant roles.** If the user lists 5 past positions and 2 clearly align with the target job, interview those first and in more depth. Still cover the others, but don't spend 10 questions on an unrelated internship.
-- **Ask job-specific follow-ups.** If the job requires "experience leading cross-functional teams," ask about leadership and collaboration for each relevant role. If it wants "CI/CD pipeline experience," probe for that specifically.
+- **Ask job-specific follow-ups.** If the job requires "experience leading engineering teams," ask about leadership and collaboration for each relevant role. If it wants "CI/CD pipeline experience," probe for that specifically.
 - **Surface hidden matches.** The user might not realize their work is relevant. If the job wants "event-driven architecture" and the user mentions Kafka in passing, dig in: "You mentioned Kafka — can you tell me more about that system? What scale was it running at?"
 - **Don't over-filter.** Capture all roles and achievements — the data files are the user's career base, not a single-job snapshot. But allocate interview effort proportionally to relevance.
 

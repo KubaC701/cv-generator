@@ -8,3 +8,4 @@
 
 - Create a Web UI instead of using the CLI.
 - Graphical preview to edit manually or point to the agent what is to change
+- Create a wizard step by step asking questions, what style, layout, font, colors, etc.

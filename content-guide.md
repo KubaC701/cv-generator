@@ -19,7 +19,7 @@ Every bullet follows: **Action → What → Impact.**
 | Was responsible for database management | Migrated 12 PostgreSQL databases to Aurora, cutting query latency by 40% |
 | Helped improve the onboarding process | Redesigned onboarding flow, reducing new-user drop-off from 60% to 23% |
 | Worked on frontend features | Built real-time collaborative editor used by 15k daily active users |
-| Managed a team of developers | Led 8-person cross-functional team shipping a payments platform processing $2M/month |
+| Managed a team of developers | Led 8-person team shipping a payments platform processing $2M/month |
 
 **The "so what?" test.** After writing each bullet, ask: *so what?* If the answer isn't in the bullet, it needs a result clause. "Built a dashboard" → so what? → "Built a dashboard that cut manual reporting by 6 hours/week."
 
@@ -57,7 +57,7 @@ If you truly have no numbers, emphasize the *nature* of the change: "Eliminated 
 Tailoring is the single highest-impact thing you can do. A CV is a pitch for a specific role, not a career biography.
 
 1. **Extract keywords** from the job description — required skills, responsibilities, valued traits. Note the *order* they appear in (earlier = higher priority to the employer).
-2. **Mirror their language.** If the job says "cross-functional collaboration," use that exact phrase — not "worked with other teams." ATS and recruiters both scan for keyword matches.
+2. **Mirror their language.** If the job says "distributed systems at scale," use that exact phrase — not "big backend systems." ATS and recruiters both scan for keyword matches.
 3. **Reorder bullets within each role** to lead with the most relevant achievement. Don't always default to chronological within a role.
 4. **Front-load skills** for the job. If they want Python and you list 8 languages, Python comes first.
 5. **Trim aggressively.** An impressive bullet that's irrelevant to this job competes for space with bullets that match. Cut it.

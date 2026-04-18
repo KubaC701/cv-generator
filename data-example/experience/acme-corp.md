@@ -5,7 +5,7 @@
 
 ## Overview
 
-Acme Corp is a B2B SaaS platform serving 500+ enterprise clients. I lead backend development for the billing and subscription management domain within a cross-functional team of 6.
+Acme Corp is a B2B SaaS platform serving 500+ enterprise clients. I lead backend development for the billing and subscription management domain within a team of 6.
 
 ## Key Achievements
 
