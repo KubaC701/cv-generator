@@ -40,6 +40,13 @@ If you truly have no numbers, emphasize the *nature* of the change: "Eliminated 
 
 ---
 
+## Experience
+
+- **Reverse chronological.** Most recent role first. Don't reorder by relevance — that happens *within* bullets and via section order, not by scrambling the timeline. Recruiters and ATS parsers both expect a top-to-bottom timeline; breaking that costs trust before they read a single bullet, and functional/grouped layouts read as "hiding something" even when they aren't.
+- For 10+ year careers, drop or compress the oldest roles rather than reorder.
+
+---
+
 ## Bullet Writing Rules
 
 - 3–6 bullets per role. Fewer for older/shorter roles. Most recent role gets the most.
@@ -67,10 +74,16 @@ Tailoring is the single highest-impact thing you can do. A CV is a pitch for a s
 
 ## Summary
 
+The summary is the one place the CV speaks in the user's voice. It should feel like a person, not a recap.
+
 - 2–3 sentences, max ~50 words.
-- Structure: [Years of experience] + [core domain] + [1–2 differentiators] + [what you bring to this role].
-- Tailored to the target job — mirror their language and priorities.
-- Avoid generic filler: "passionate professional seeking challenging opportunities" says nothing. Be specific about *what* you do and *what separates you.*
+- **Lead with something personal** — what the user cares about, how they work, what kind of problems pull them in. This is the part that doesn't repeat anywhere else on the CV.
+- Anchor with one or two concrete facts (years of experience, core domain, a standout differentiator) so the reader still gets context.
+- **Don't restate the experience section.** If the summary could be deleted and nothing would be lost, rewrite it. Bullets already prove *what* the user did — the summary explains *why* and *who*.
+- **Company alignment is allowed but should be subtle.** If something about the target company genuinely matches the user's values or interests, weave it in naturally. Avoid sycophantic openings ("Excited to join..."), name-dropping the company in the first line, or generic flattery. One understated nod is plenty; zero is also fine.
+- Pull from `data/values.md` and any interest/values signal in the user's data. If those are missing, ask before fabricating.
+- Mirror the job's language for keywords, but don't let tailoring flatten the personality — a summary that reads identically for two different people has failed.
+- Avoid generic filler: "passionate professional seeking challenging opportunities" says nothing. Avoid stacking buzzwords ("results-driven, detail-oriented, collaborative") — they read as filler regardless of how true they are.
 
 ---
 

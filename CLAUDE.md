@@ -295,6 +295,7 @@ This runs validation and (if content fits) produces a print-ready PDF alongside 
 4. **One file = one output.** The HTML file is self-contained. No external CSS, no JS, no external images. Just HTML + inline CSS + inline SVGs + one Google Fonts link. Photos are embedded as base64 data URIs.
 5. **Ask, don't assume.** When data is ambiguous or missing, ask the user. When visual preferences are unclear, offer choices.
 6. **Keep data files updated.** If the user shares new information during generation (e.g., "actually I got promoted to senior"), update the relevant data file too — not just the CV output.
+7. **No em-dashes.** Never use em-dashes (`—`) in CV content or in your own prose. Use commas, periods, parentheses, or colons instead. For numeric/date ranges, an en-dash (`–`) is acceptable. This applies to summary text, bullets, headings, dates, and any agent-written text.
 
 ---
 
